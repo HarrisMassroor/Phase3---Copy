@@ -1,0 +1,23 @@
+Part A design
+=============
+
+Part A uses one shared recursive Square function in square.c. The function
+returns N squared using addition and counts each invocation. square.h exposes
+that interface to the platform-specific programs.
+
+A1 is the Windows implementation. The parent creates Windows threads with
+CreateThread, waits with Sleep, and changes keepRunning when the deadline is
+reached. Each worker checks the flag between Square calls and prints its own
+statistics before exiting.
+
+A2 uses POSIX pthreads and cancels workers at the deadline. A3 uses detached
+POSIX threads and lets the parent call pthread_exit instead of joining them.
+A4 uses processes, a separate timer process, SIGALRM handlers, and wait to
+report normal or deadline completion.
+
+The command-line interface for every version is:
+
+    program threads deadline size
+
+The Makefile selects Windows or Linux targets so platform-specific code is not
+compiled on the wrong operating system.

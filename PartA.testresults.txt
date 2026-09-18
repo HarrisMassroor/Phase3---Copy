@@ -1,0 +1,16 @@
+Part A test results
+===================
+
+A1 was compiled with MinGW on Windows and tested through PartB.bash. A test
+using four workers, a three-second deadline, and size 200 printed statistics
+for all four workers. Each worker completed 200 squares and reported 20300
+Square invocations.
+
+A2, A3, and A4 were compiled with GCC in Ubuntu/WSL. Tests using two workers,
+a one-second deadline, and size 20 completed and printed worker statistics.
+Short-deadline tests also exercised cancellation, detached-thread exit, and
+SIGALRM handling.
+
+Part B accepted redirected input with three positive integers per line and
+rejected invalid lines such as strings, negative values, zero values, and lines
+with the wrong number of fields.
