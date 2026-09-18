@@ -1,0 +1,10 @@
+Part B design
+=============
+
+partB.bash receives one version argument: partA1, partA2, partA3, or partA4.
+It checks the operating system, locates the matching executable beside the
+script, and reads three positive integers from each input line until EOF.
+
+Invalid lines are reported and skipped. Valid lines are passed to the selected
+program as threads, deadline, and size. This supports both interactive input
+and redirected input files.
