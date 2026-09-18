@@ -1,0 +1,74 @@
+CMPT 332 Programming Style Guidelines
+Team: Harris Massroor
+
+These are the style rules we will use while working on the project. They are
+meant to keep our code easy to read, review, and maintain.
+
+1. Formatting
+	- Indent with four spaces instead of tabs.
+	- Try to keep lines under 100 characters when it makes sense.
+	- Use the same brace style throughout the project. Opening braces go on
+	  the same line, and closing braces line up with the statement that
+	  opened them.
+	- Leave spaces around binary operators and after commas.
+	- Remove trailing spaces and extra blank lines.
+	- Use blank lines to separate larger sections, but avoid breaking up short
+	  groups of related statements.
+
+2. Naming
+	- Choose names that explain what a variable or function is for.
+	- Use lower_snake_case for variables, functions, and file-local names.
+	- Use UpperCamelCase for types and structures.
+	- Use UPPER_SNAKE_CASE for constants and macros.
+	- Single-letter names are fine for short loop counters or other familiar
+	  cases, but should not be used everywhere.
+	- Avoid unexplained abbreviations and names that are easy to confuse with
+	  each other.
+
+3. Comments and documentation
+	- Comments should explain why something is being done when the reason is
+	  not obvious from the code.
+	- Document public functions with their purpose, parameters, return value,
+	  and possible errors.
+	- Update comments when the code changes.
+	- Remove old commented-out code. Clear names are better than comments that
+	  simply restate the code.
+	- Use TODO comments for unfinished work and include an owner or issue
+	  reference. Debugging output should be removed before submission.
+
+4. Functions and organization
+	- Give each function one clear job and keep it reasonably short.
+	- Check inputs when they enter a function and handle errors instead of
+	  ignoring them.
+	- Use early returns when they make the control flow easier to follow.
+	- Keep global state to a minimum and make ownership and cleanup clear.
+	- Keep related declarations and implementations together, and expose only
+	  what other files need.
+
+5. Safety and reliability
+	- Initialize variables before using them, and check allocation, I/O, and
+	  system-call results.
+	- Respect array bounds and avoid unsafe string or memory operations.
+	- Every resource we own should be released exactly once, including on error
+	  paths.
+	- Fix compiler warnings instead of ignoring them. If a warning is
+	  intentional, document why.
+	- Use assertions for programmer assumptions, not for input errors that the
+	  program can handle.
+
+6. Collaboration and review
+	- Keep commits small and give them clear, imperative messages.
+	- Keep formatting-only changes separate from functional changes.
+	- Before sharing changes, build the project, run the relevant tests, and
+	  review the diff.
+	- Both partners should review changes before they are merged. The person who
+	  made the change should address the review comments.
+	- After resolving a merge conflict, rerun the relevant tests.
+	- Do not commit personal paths, credentials, generated binaries, or
+	  editor-specific files.
+
+7. Our agreement
+	- We will follow these rules consistently and discuss exceptions before
+	  committing them.
+	- Any exception should be documented near the affected code and agreed upon
+	  by both partners.
