@@ -1,0 +1,14 @@
+Part C test results
+===================
+
+make test completed successfully in Ubuntu/WSL. The test program reported:
+
+    after adders: 1 3 2 4 (count=4)
+    search for 3: found
+    removed current item: 1
+    trimmed item: 4
+    after concat: 3 2 10 20 (count=4)
+    after free: count=0
+
+The library archive liblist.a was created. The test covered add, insert,
+append, prepend, navigation, search, remove, trim, concat, and free.

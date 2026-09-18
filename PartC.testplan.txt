@@ -1,0 +1,14 @@
+Part C test plan
+=================
+
+1. Build liblist.a and mytestlist-Linuxx86_64 with make.
+2. Create a list and verify append, prepend, add, and insert operations.
+3. Check ListFirst, ListLast, ListNext, ListPrev, ListCurr, and ListCount.
+4. Search for an existing item and for an item that is not present.
+5. Remove the current node and trim the last node. Verify returned items and
+   list counts.
+6. Concatenate two lists and verify ordering and counts.
+7. Free a list with an itemFree function and confirm that the list pool and
+   node pool can be reused.
+8. Build and run the instructor testlist.c when it is supplied.
+9. Build with -Wall -Wextra -Wpedantic -Werror and fix all warnings.

@@ -1,0 +1,19 @@
+Part C design
+=============
+
+Part C is a fixed-storage generic doubly linked list library. LIST objects and
+NODE objects are kept in shared pools. A node stores a void pointer and links
+to its neighbors; a list stores head, tail, current, and count information.
+
+The implementation is divided into pool creation, add operations, movement
+operations, and removal/search/free operations. list.h exposes only the public
+structures, constants, and function prototypes. list_internal.h is private to
+the implementation files.
+
+The current item is updated by navigation and insertion functions. Removing a
+node returns its item to the caller. ListFree calls the supplied itemFree
+function for every item, releases all nodes, and makes the list reusable.
+
+The library is built as liblist.a. mytestlist.c exercises the public interface,
+and the Makefile also builds testlist.c when the instructor's test file is
+present.
