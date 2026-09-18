@@ -1,0 +1,41 @@
+CMPT 332 Assignment 1 Test Commands
+====================================
+PHASE 3: A2, A3, AND A4 USING WSL
+==================================
+
+cd "/mnt/c/Users/massr/OneDrive/Desktop/Phase3"
+make clean
+make all
+./mytestlist-Linuxx86_64
+./A2 2 1 100
+./A3 2 1 100
+./A4 2 1 100
+printf "2 1 100\n4 3 200\n" | bash PartB.bash partA2
+printf "2 1 100\n4 3 200\n" | bash PartB.bash partA3
+printf "2 1 100\n4 3 200\n" | bash PartB.bash partA4
+./A2 0 1 100
+./A3 0 1 100
+./A4 0 1 100
+printf "2 1 100\ninvalid input\n4 3 200\n" | bash PartB.bash partA2
+timeout 5s ./A2 2 1 100000
+timeout 5s ./A3 2 1 100000
+timeout 5s ./A4 2 1 100000
+
+
+PART C LIST LIBRARY USING WSL
+==============================
+
+cd "/mnt/c/Users/massr/OneDrive - University of Saskatchewan/Classes/CMPT332/A1/PartC"
+make clean
+make test
+ls -l liblist.a
+make clean
+make CFLAGS="-std=c11 -Wall -Wextra -Wpedantic -Werror"
+
+
+CLEANUP
+=======
+
+Run this after testing:
+
+make clean

@@ -1,0 +1,106 @@
+CMPT 332 Assignment 1 Testing Guide
+====================================
+
+PART 3: PHASE 3 (A2, A3, AND A4) USING WSL
+===========================================
+
+1. Move to the phase 3 directory:
+
+    cd "/mnt/c/Users/massr/OneDrive - University of Saskatchewan/Classes/CMPT332/A1/a1-phase3"
+
+2. Remove previous build files:
+
+    make clean
+
+3. Build all phase 3 programs:
+
+    make all
+
+4. Run the list test:
+
+    ./mytestlist-Linuxx86_64
+
+5. Run A2 directly:
+
+    ./A2 2 1 100
+
+6. Run A3 directly:
+
+    ./A3 2 1 100
+
+7. Run A4 directly:
+
+    ./A4 2 1 100
+
+8. Run Part B for A2:
+
+    printf "2 1 100\n4 3 200\n" | bash PartB.bash partA2
+
+9. Run Part B for A3:
+
+    printf "2 1 100\n4 3 200\n" | bash PartB.bash partA3
+
+10. Run Part B for A4:
+
+    printf "2 1 100\n4 3 200\n" | bash PartB.bash partA4
+
+11. Test invalid arguments:
+
+    ./A2 0 1 100
+    ./A3 0 1 100
+    ./A4 0 1 100
+
+12. Test Part B with invalid input and a valid line afterward:
+
+    printf "2 1 100\ninvalid input\n4 3 200\n" | bash PartB.bash partA2
+
+13. Test short-deadline behavior with a large workload:
+
+    timeout 5s ./A2 2 1 100000
+    timeout 5s ./A3 2 1 100000
+    timeout 5s ./A4 2 1 100000
+
+Expected result:
+- A2, A3, and A4 should print completion statistics.
+- Invalid arguments should be rejected.
+- Part B should continue after invalid input.
+- Large workloads should print partial statistics or signal/deadline messages.
+
+
+PART 4: PART C LIST LIBRARY USING WSL
+======================================
+
+1. In WSL, move to Part C:
+
+    cd "/mnt/c/Users/massr/OneDrive - University of Saskatchewan/Classes/CMPT332/A1/PartC"
+
+2. Remove previous build files:
+
+    make clean
+
+3. Build and run the normal list test:
+
+    make test
+
+4. Confirm that the static library exists:
+
+    ls -l liblist.a
+
+5. Rebuild with warnings treated as errors:
+
+    make clean
+    make CFLAGS="-std=c11 -Wall -Wextra -Wpedantic -Werror"
+
+Expected result:
+- The list test should finish successfully.
+- liblist.a should be created.
+- The Werror build should finish without compiler errors.
+
+
+CLEANUP
+=======
+
+To remove generated files after testing, run the following inside each phase directory:
+
+    make clean
+
