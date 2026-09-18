@@ -1,0 +1,17 @@
+Part A test plan
+=================
+
+1. Compile each platform target with the supplied Makefile.
+2. Run each program with small inputs, for example:
+
+       threads=2 deadline=1 size=20
+
+3. Confirm that every worker reports completed squares and Square invocations.
+4. Use a short deadline and a large size to exercise cancellation or signal
+   handling. Confirm that partial statistics are still printed.
+5. Test invalid arguments: missing values, zero threads, negative values,
+   non-numeric strings, and zero size. Each program should reject them.
+6. For A4, confirm that the timer process sends SIGALRM and that the parent
+   waits for all workers.
+7. Test Part B with redirected input containing several valid and invalid
+   lines. Confirm that the loop continues after invalid input.
