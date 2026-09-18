@@ -1,0 +1,30 @@
+Part E testing
+==============
+
+Build and start xv6 with:
+
+    make clean
+    make qemu
+
+Inside xv6, run:
+
+    trace 32 grep hello README
+
+This produced read traces such as:
+
+    3: syscall read -> 1023
+    3: syscall read -> 985
+    3: syscall read -> 481
+    3: syscall read -> 0
+
+To test inheritance through fork, run:
+
+    trace 2 usertests forkforkfork
+
+The test printed fork traces from child processes and ended with:
+
+    OK
+    ALL TESTS PASSED
+
+The xv6 tree used syscall number 22 for sync, so trace was assigned the next
+free number, 23.

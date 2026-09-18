@@ -1,0 +1,13 @@
+Part E design
+=============
+
+Part E adds a trace system call to xv6. Each process stores a trace_mask. The
+trace system call replaces the mask, and fork copies the parent's mask to the
+child. The syscall dispatcher checks the bit associated with each completed
+system call and prints the process ID, syscall name, and return value when the
+bit is enabled.
+
+A user program named trace accepts a mask followed by a command and its
+arguments. It enables tracing and then calls exec. The modified xv6 source is
+stored in xv6-A1.tar, and the required changed files are also documented in
+the PartE submission files.

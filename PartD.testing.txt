@@ -1,0 +1,21 @@
+Part D testing
+==============
+
+The xv6 image was rebuilt with make clean and make qemu. Inside xv6, the
+following files were created:
+
+    echo > b
+    mkdir a
+    echo > a/b
+    mkdir a/aa
+    echo > a/aa/b
+
+Running find . b produced:
+
+    ./b
+    ./a/b
+    ./a/aa/b
+
+The bonus command primes produced the primes from 2 through 31. Repeated
+mkdir commands may report that a directory already exists because xv6 keeps
+filesystem changes between QEMU runs.

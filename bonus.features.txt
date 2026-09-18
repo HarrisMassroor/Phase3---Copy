@@ -1,0 +1,10 @@
+Possible future bonus features
+==============================
+
+Part A could be extended with clearer timing statistics, stronger numeric
+argument parsing, and a shared results file for automated comparisons.
+
+Part C could support dynamically growing node storage when the fixed node pool
+is full. The pool could grow with realloc while preserving existing nodes and
+links. More edge-case tests could also cover pool exhaustion, invalid lists,
+and concatenating empty lists.

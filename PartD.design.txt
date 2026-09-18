@@ -1,0 +1,15 @@
+Part D design
+=============
+
+find is an xv6 user program. It opens the starting path, obtains its type with
+fstat, and recursively visits directory entries. It skips empty entries and
+both dot entries. For regular files, it compares the basename with the target
+name and prints matching paths.
+
+primes is the bonus xv6 program. The first process writes integers 2 through
+35 to a pipe. Each sieve process reads its first value as a prime, prints it,
+creates the next pipe and child, filters multiples of its prime, closes unused
+pipe ends, and waits for its child.
+
+Both programs are stored in the xv6 user directory and are registered in
+UPROGS. The cleaned xv6 source tree is submitted as xv6-A1.tar.
