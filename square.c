@@ -1,9 +1,8 @@
 #include "square.h"
 
-long Square(long n, unsigned long *invocations)
+int Square(int N)
 {
-    ++(*invocations);
-    if (n == 0)
+    if (N == 0)
         return 0;
-    return Square(n - 1, invocations) + n + n - 1;
+    return Square(N - 1) + N + N - 1;
 }

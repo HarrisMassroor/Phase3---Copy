@@ -2,7 +2,6 @@
 #define A2_H
 
 #include <pthread.h>
-#include "square.h"
 
 typedef struct {
     pthread_t thread;

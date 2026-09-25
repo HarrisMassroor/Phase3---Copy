@@ -63,3 +63,6 @@ testlist-Linuxx86_64: testlist.c liblist.a
 clean:
 	rm -f A1.exe A2 A3 A4 *.o *.a \
 		mytestlist-Linuxx86_64 testlist-Linuxx86_64
+
+test: mytestlist-Linuxx86_64
+	./mytestlist-Linuxx86_64

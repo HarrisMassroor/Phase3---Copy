@@ -89,7 +89,7 @@ PART 4: PART C LIST LIBRARY USING WSL
 5. Rebuild with warnings treated as errors:
 
     make clean
-    make CFLAGS="-std=c11 -Wall -Wextra -Wpedantic -Werror"
+    make CFLAGS="-std=c11 -Wall -Wextra -pedantic -Werror"
 
 Expected result:
 - The list test should finish successfully.

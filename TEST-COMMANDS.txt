@@ -3,7 +3,7 @@ CMPT 332 Assignment 1 Test Commands
 PHASE 3: A2, A3, AND A4 USING WSL
 ==================================
 
-cd "/mnt/c/Users/massr/OneDrive/Desktop/Phase3"
+cd "/mnt/c/Users/massr/OneDrive/Desktop/Phase3 - Copy"
 make clean
 make all
 ./mytestlist-Linuxx86_64
@@ -25,12 +25,12 @@ timeout 5s ./A4 2 1 100000
 PART C LIST LIBRARY USING WSL
 ==============================
 
-cd "/mnt/c/Users/massr/OneDrive - University of Saskatchewan/Classes/CMPT332/A1/PartC"
+cd "/mnt/c/Users/massr/OneDrive/Desktop/Phase3 - Copy"
 make clean
 make test
 ls -l liblist.a
 make clean
-make CFLAGS="-std=c11 -Wall -Wextra -Wpedantic -Werror"
+make CFLAGS="-std=gnu90 -Wall -Wextra -pedantic -Werror"
 
 
 CLEANUP

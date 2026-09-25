@@ -1,0 +1,31 @@
+------------------- Part D Xv6 User Program ---------------------
+
+- Run Each Command 1 at a time 
+
+cd ~/xv6-riscv
+
+make clean
+
+make qemu
+
+mkdir projects
+
+echo > projects/report
+
+mkdir projects/archive
+
+echo > projects/archive/report
+
+mkdir projects/archive/old
+
+echo > projects/archive/old/report
+
+find . report
+
+primes
+
+echo > notes
+
+find . notes
+
+

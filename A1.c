@@ -6,20 +6,51 @@
 
 volatile BOOL keepRunning = TRUE;
 
+/* Per-thread invocation counters */
+unsigned long invocationCount[1024];
+
 DWORD WINAPI Worker(void *parameter)
 {
     WorkerData *data = (WorkerData *)parameter;
-    unsigned long invocations = 0;   /* C90-safe */
     long completed = 0;
     long n;
 
     for (n = 1; n <= data->size && keepRunning; ++n) {
-        (void)Square(n, &invocations);
+        ++invocationCount[data->id - 1];   /* count Square() invocation */
+        (void)Square((int)n);              /* correct Square() call */
         ++completed;
     }
 
     printf("Thread %d: %ld squares completed, %lu Square invocations\n",
-           data->id, completed, invocations);
+           data->id, completed, invocationCount[data->id - 1]);
+
+    return 0;
+}
+#include <windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "A1.h"
+#include "square.h"
+
+volatile BOOL keepRunning = TRUE;
+
+/* Per-thread invocation counters */
+unsigned long invocationCount[1024];
+
+DWORD WINAPI Worker(void *parameter)
+{
+    WorkerData *data = (WorkerData *)parameter;
+    long completed = 0;
+    long n;
+
+    for (n = 1; n <= data->size && keepRunning; ++n) {
+        ++invocationCount[data->id - 1];   /* count Square() invocation */
+        (void)Square((int)n);              /* correct Square() call */
+        ++completed;
+    }
+
+    printf("Thread %d: %ld squares completed, %lu Square invocations\n",
+           data->id, completed, invocationCount[data->id - 1]);
 
     return 0;
 }

@@ -5,17 +5,19 @@
 #include <time.h>
 #include <unistd.h>
 #include "A2.h"
+#include "square.h"
 
 void *worker_main(void *arg)
 {
     worker_t *worker = arg;
     long n;
 
-    (void)pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
-    (void)pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 
     for (n = 1; n <= worker->size; ++n) {
-        (void)Square(n, &worker->invocations);
+        ++worker->invocations;        /* count Square() invocation */
+        (void)Square((int)n);         /* correct Square() call */
         ++worker->completed;
     }
 
@@ -41,12 +43,14 @@ int main(int argc, char **argv)
     count = atoi(argv[1]);
     deadline_value = atol(argv[2]);
     size = atol(argv[3]);
+
     if (count <= 0 || deadline_value < 0 ||
         deadline_value > UINT_MAX || size <= 0) {
         fprintf(stderr, "threads and size must be positive; "
                 "deadline must not be negative\n");
         return EXIT_FAILURE;
     }
+
     deadline = (unsigned int)deadline_value;
 
     workers = calloc((size_t)count, sizeof(*workers));
@@ -59,6 +63,9 @@ int main(int argc, char **argv)
     for (i = 0; i < count; ++i) {
         workers[i].id = i + 1;
         workers[i].size = size;
+        workers[i].completed = 0;
+        workers[i].invocations = 0;
+
         rc = pthread_create(&workers[i].thread, NULL, worker_main, &workers[i]);
         if (rc != 0) {
             fprintf(stderr, "pthread_create failed for thread %d\n", i + 1);
@@ -70,14 +77,17 @@ int main(int argc, char **argv)
     sleep(deadline);
 
     for (i = 0; i < created; ++i) {
-        (void)pthread_cancel(workers[i].thread);
+        pthread_cancel(workers[i].thread);
     }
 
     for (i = 0; i < created; ++i) {
         void *result;
-        (void)pthread_join(workers[i].thread, &result);
+        pthread_join(workers[i].thread, &result);
+
         printf("Thread %d: %ld squares completed, %lu Square invocations, %s\n",
-               workers[i].id, workers[i].completed, workers[i].invocations,
+               workers[i].id,
+               workers[i].completed,
+               workers[i].invocations,
                result == PTHREAD_CANCELED ? "cancelled" : "finished normally");
     }
 

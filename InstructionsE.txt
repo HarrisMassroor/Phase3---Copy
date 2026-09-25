@@ -1,0 +1,12 @@
+----------------------------------------Part E--------------------------------------------
+Run 1 Line at a time in Xv6
+
+cd ~/xv6-riscv
+
+make qemu
+
+trace 32 grep hello README
+
+trace 2 usertests forkforkfork
+
+

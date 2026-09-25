@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include "square.h"
 
 static volatile int keepRunning = 1;
@@ -21,12 +22,14 @@ static void *worker_main(void *argument)
     long n;
 
     for (n = 1; n <= data->size && keepRunning; ++n) {
-        (void)Square(n, &invocations);
+        ++invocations;              /* count Square() invocation */
+        (void)Square((int)n);       /* correct Square() call */
         ++completed;
     }
 
     printf("Thread %d: %ld squares completed, %lu Square invocations\n",
            data->id, completed, invocations);
+
     free(data);
     return NULL;
 }
@@ -50,6 +53,7 @@ int main(int argc, char **argv)
     thread_count = atoi(argv[1]);
     deadline_seconds = atol(argv[2]);
     size = atol(argv[3]);
+
     if (thread_count <= 0 || deadline_seconds < 0 || size <= 0) {
         fprintf(stderr, "threads and size must be positive; "
                 "deadline must not be negative\n");
@@ -67,6 +71,7 @@ int main(int argc, char **argv)
 
         data->id = i + 1;
         data->size = size;
+
         result = pthread_create(&thread, NULL, worker_main, data);
         if (result != 0) {
             fprintf(stderr, "pthread_create failed for thread %d\n", i + 1);
@@ -74,12 +79,14 @@ int main(int argc, char **argv)
             keepRunning = 0;
             break;
         }
+
         pthread_detach(thread);
     }
 
     delay.tv_sec = deadline_seconds;
     delay.tv_nsec = 0;
     nanosleep(&delay, NULL);
+
     keepRunning = 0;
 
     pthread_exit(NULL);

@@ -48,7 +48,8 @@ static void child_process(int id, long size)
         _exit(EXIT_FAILURE);
 
     for (n = 1; n <= size && !child_alarm; ++n) {
-        (void)Square(n, &invocations);
+        ++invocations;              /* count Square() invocation */
+        (void)Square((int)n);       /* correct Square() call */
         ++completed;
     }
 
@@ -76,8 +77,10 @@ static void timer_process(const pid_t *children, int child_count,
     }
 
     for (i = 0; i < child_count; ++i)
-        (void)kill(children[i], SIGALRM);
-    (void)kill(parent, SIGALRM);
+        kill(children[i], SIGALRM);
+
+    kill(parent, SIGALRM);
+
     _exit(EXIT_SUCCESS);
 }
 
@@ -104,10 +107,14 @@ int main(int argc, char **argv)
     int finished;
     pid_t result;
 
-    if (argc != 4 || !parse_long(argv[1], &thread_count_value) ||
-        !parse_long(argv[2], &deadline_value) || !parse_long(argv[3], &size) ||
+    if (argc != 4 ||
+        !parse_long(argv[1], &thread_count_value) ||
+        !parse_long(argv[2], &deadline_value) ||
+        !parse_long(argv[3], &size) ||
         thread_count_value <= 0 || thread_count_value > INT_MAX ||
-        deadline_value < 0 || deadline_value > UINT_MAX || size <= 0) {
+        deadline_value < 0 || deadline_value > UINT_MAX ||
+        size <= 0) {
+
         fprintf(stderr, "Usage: %s threads deadline size\n", argv[0]);
         return EXIT_FAILURE;
     }
@@ -134,17 +141,19 @@ int main(int argc, char **argv)
         if (children[i] == -1) {
             perror("fork");
             for (j = 0; j < child_count; ++j)
-                (void)kill(children[j], SIGALRM);
+                kill(children[j], SIGALRM);
             break;
         }
+
         if (children[i] == 0)
             child_process(i + 1, size);
+
         ++child_count;
     }
 
     if (child_count != thread_count_value) {
         for (i = 0; i < child_count; ++i)
-            (void)waitpid(children[i], NULL, 0);
+            waitpid(children[i], NULL, 0);
         free(children);
         return EXIT_FAILURE;
     }
@@ -153,24 +162,27 @@ int main(int argc, char **argv)
     if (timer == -1) {
         perror("fork timer");
         for (i = 0; i < child_count; ++i)
-            (void)kill(children[i], SIGALRM);
+            kill(children[i], SIGALRM);
         for (i = 0; i < child_count; ++i)
-            (void)waitpid(children[i], NULL, 0);
+            waitpid(children[i], NULL, 0);
         free(children);
         return EXIT_FAILURE;
     }
+
     if (timer == 0)
-        timer_process(children, child_count, (unsigned int)deadline_value,
-                      getppid());
+        timer_process(children, child_count,
+                      (unsigned int)deadline_value, getppid());
 
     for (finished = 0; finished < child_count;) {
         result = wait(&status);
+
         if (result == -1) {
             if (errno == EINTR && parent_alarm)
                 continue;
             perror("wait");
             break;
         }
+
         for (i = 0; i < child_count; ++i) {
             if (result == children[i]) {
                 ++finished;
@@ -179,8 +191,9 @@ int main(int argc, char **argv)
         }
     }
 
-    (void)kill(timer, SIGTERM);
-    (void)waitpid(timer, NULL, 0);
+    kill(timer, SIGTERM);
+    waitpid(timer, NULL, 0);
+
     free(children);
     return EXIT_SUCCESS;
 }
